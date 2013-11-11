@@ -1130,6 +1130,9 @@ the specific language governing permissions and limitations under the Apache Lic
 
         // abstract
         positionDropdown: function() {
+            if (this.body().length === 0)
+                return;
+
             var $dropdown = this.dropdown,
                 offset = this.container.offset(),
                 height = this.container.outerHeight(false),
@@ -1857,6 +1860,8 @@ the specific language governing permissions and limitations under the Apache Lic
             if (params.focus) {
                 this.focusser.focus();
             }
+
+            this.opts.element.trigger($.Event("select2-close"));
         },
 
         // single
@@ -2684,6 +2689,7 @@ the specific language governing permissions and limitations under the Apache Lic
         close: function () {
             if (!this.opened()) return;
             this.parent.close.apply(this, arguments);
+            this.opts.element.trigger($.Event("select2-close"));
         },
 
         // multi
@@ -2855,7 +2861,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
             selected.remove();
 
-            this.opts.element.trigger({ type: "removed", val: this.id(data), choice: data });
+            this.opts.element.trigger({ type: "select2-removed", val: this.id(data), object: data });
             this.triggerChange({ removed: data });
         },
 
@@ -2929,7 +2935,7 @@ the specific language governing permissions and limitations under the Apache Lic
               searchWidth = minimumWidth;
             }
 
-            this.search.width(Math.floor(searchWidth));
+            this.search.width(minimumWidth);
         },
 
         // multi
@@ -3065,7 +3071,7 @@ the specific language governing permissions and limitations under the Apache Lic
             var self=this, ids, old;
             if (arguments.length === 0) {
                  return this.selection
-                     .find(".select2-search-choice")
+                     .children(".select2-search-choice")
                      .map(function() { return $(this).data("select2-data"); })
                      .get();
             } else {
