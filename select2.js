@@ -1140,7 +1140,7 @@ the specific language governing permissions and limitations under the Apache Lic
                 dropHeight = $dropdown.outerHeight(false),
                 viewPortRight = $(window).scrollLeft() + $(window).width(),
                 viewportBottom = $(window).scrollTop() + $(window).height(),
-                dropTop = offset.top + height,
+                dropTop = offset.top + height + 1,
                 dropLeft = offset.left,
                 enoughRoomBelow = dropTop + dropHeight <= viewportBottom,
                 enoughRoomAbove = (offset.top - dropHeight) >= this.body().scrollTop(),
@@ -1189,7 +1189,7 @@ the specific language governing permissions and limitations under the Apache Lic
             }
 
             if (above) {
-                dropTop = offset.top - dropHeight;
+                dropTop = offset.top - dropHeight - 1;
                 this.container.addClass("select2-drop-above");
                 $dropdown.addClass("select2-drop-above");
             }
